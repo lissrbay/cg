@@ -8,6 +8,7 @@
 #include "otherdrawalgo.hpp"
 #include "polygon.hpp"
 #include "cutting.hpp"
+#include "transformation.hpp"
 using namespace std;
 TGAColor white = TGAColor(255, 255, 255, 255);
 TGAColor violet = TGAColor(255, 0, 255, 255);
@@ -143,7 +144,7 @@ void testLineSegment4()
     image.flip_vertically();
     image.write_tga_file("output3.tga");
 }
-/*
+
 void testTexturingModel()
 {
     TGAImage image(width, height, TGAImage::RGB);
@@ -172,8 +173,8 @@ void testTexturingModel()
 
     image.flip_vertically();
     image.write_tga_file("output7.tga");
-} 
-
+}
+/*
 void testCode()
 {
     TGAImage image(width, height, TGAImage::RGB);
@@ -227,29 +228,29 @@ void testCode2()
 
     image.flip_vertically();
     image.write_tga_file("output7.tga");
-}
+}*/
+
 void testTransformPoly()
 {
     TGAImage image(width, height, TGAImage::RGB);
-    vector<vector<int>> rect = {
-        {100, 100}, {100, 500}, {500, 500}, {550, 260}, {500, 100}};
-    vector<vector<int>> rect2;
-    rect2 = transferPoly(rect, {180, 100});
-    rect2 = rotatePoly(rect2, 30);
-    rect2 = resizePoly(rect2, 0.5);
-    rect2 = shiftXPoly(rect2, 1.0/3);
-    for(int i = 0;i < rect.size(); i++)
+    vector<Point<int>> points = {Point<int>(100, 100), Point<int>(100, 500),
+                                 Point<int>(500, 500), Point<int>(500, 100)};
+    Polygon<int> rect = Polygon<int>(points);
+    Polygon<int> newRect;
+    newRect = transferPoly(rect, {180, 100});
+    newRect = rotatePoly(newRect, 30);
+    newRect = resizePoly(newRect, 0.5);
+    newRect = shiftXPoly(newRect, 1.0 / 3);
+    for (size_t i = 0; i < rect.size(); i++)
     {
-        drawLine(rect[i][0], rect[i][1], rect[(i + 1) % rect.size()][0], rect[(i + 1) % rect.size()][1], image, white);
-        drawLine(rect2[i][0], rect2[i][1], rect2[(i + 1) % rect.size()][0], rect2[(i + 1) % rect.size()][1], image, violet);
-        drawLine(rect[i][0], rect[i][1],rect2[i][0], rect2[i][1], image, red2);
-        drawLine(rect[(i + 1) % rect.size()][0], rect[(i + 1) % rect.size()][1],rect2[(i + 1) % rect.size()][0], rect2[(i + 1) % rect.size()][1], image, red2);
+        drawLine(Line<int>(rect[i], rect[(i + 1) % rect.size()]), image, white);
+        drawLine(Line<int>(newRect[i], newRect[(i + 1) % newRect.size()]), image, violet);
+        drawLine(Line<int>(rect[i], newRect[i]), image, red);
     }
 
     image.flip_vertically();
     image.write_tga_file("output1.tga");
-
-}*/
+}
 
 int main(int argc, char **argv)
 {
@@ -258,16 +259,16 @@ int main(int argc, char **argv)
     //testWu(model);        //тоже, но с Ву
     //testLineAndCircleBrezenhem();
     //testCircleParametrised();
-    testLineSegment();
-    testLineSegment2();
-    testLineSegment3();
-    testLineSegment4();
+    //testLineSegment();
+    //testLineSegment2();
+    //testLineSegment3();
+    //testLineSegment4();
     //testCode();
     //testCode2();
 
     //testTriangleFill();
     //testTriangleFill3();
-    //testTransformPoly();
+    testTransformPoly();
 
     //testTexturingModel();
     return 0;

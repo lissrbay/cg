@@ -120,9 +120,9 @@ void liangBarsky(Line<int> line, Polygon<int> rect, TGAImage &image, TGAColor co
 template <typename T>
 Point<T> getInsideNormal(Point<T> point1, Point<T> point2, Point<T> z)
 {
-    Point<T> delta = minus(point2, point1);
+    Point<T> delta = point2 - point1;
     Point<T> n = Point<int>(-delta.y, delta.x, 0);
-    Point<T> v = minus(z, point1);
+    Point<T> v = z - point1;
     T dot = dotProduct(v, n);
 
     if (dot < 0)
@@ -136,7 +136,7 @@ Point<T> getInsideNormal(Point<T> point1, Point<T> point2, Point<T> z)
 void cyrusBeck(Line<int> line, Polygon<int> rect, TGAImage &image, TGAColor color)
 {
     line.toCorrect();
-    Point<int> D = minus(line[1], line[0]);
+    Point<int> D = line[1] - line[0];
     Point<int> boundaryPoint = rect[2];
     double tEnter = 0;
     double tLeave = 1;
@@ -147,7 +147,7 @@ void cyrusBeck(Line<int> line, Polygon<int> rect, TGAImage &image, TGAColor colo
         i++;
         Point<int> q = rect[i % rect.size()];
         Point<int> n = getInsideNormal(p, q, boundaryPoint);
-        Point<int> w = minus(line[0], p);
+        Point<int> w = line[0] - p;
         double num = dotProduct(w, n);
         double den = dotProduct(D, n);
         if (den == 0)

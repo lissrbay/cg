@@ -10,6 +10,15 @@ class Point
     T y;
     T z;
     Point(T x, T y, T z = 0) : x(x), y(y), z(z){};
+
+    Point<T> operator+(Point<T> v)
+    {
+        return Point<T>(this->x + v.x, this->y + v.y, this->z + v.z);
+    }
+    Point<T> operator-(Point<T> v)
+    {
+        return Point<T>(this->x - v.x, this->y - v.y, this->z - v.z);
+    }
 };
 
 template <typename T>
@@ -53,7 +62,7 @@ class Line
 
         this->slope =
             static_cast<double>(static_cast<double>(p1.y - p2.y)) / static_cast<double>((p1.x - p2.x));
-            
+
         p = {p1, p2};
     };
     Point<T> operator[](int i) { return p[i]; };
@@ -84,6 +93,12 @@ class Polygon
 
   public:
     Polygon(const std::vector<Point<T>> &p) : p(std::move(p)){};
+    Polygon() : p({}){};
+    Polygon<T> operator+=(Point<T> point)
+    {
+        p.push_back(point);
+        return *this;
+    }
     Point<T> operator[](int i) { return p[i]; }
     size_t size() { return p.size(); }
 };
@@ -105,13 +120,6 @@ template <typename T>
 Point<T> vec(Point<T> u, Point<T> v)
 {
     return {u.y * v.z - u.z * v.y, u.z * v.x - u.x * v.z, u.x * v.y - u.y * v.x};
-}
-
-template <typename T>
-
-Point<T> minus(Point<T> u, Point<T> v)
-{
-    return {u.x - v.x, u.y - v.y, u.z - v.z};
 }
 
 template <typename T>

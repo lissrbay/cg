@@ -147,7 +147,7 @@ void fillPolygonByListOfActiveEdges(Polygon<int> poly, TGAImage &image, TGAColor
 		scanline++;
 		removeEdges(scanline, activeEdges);
 		updateCoordinate(activeEdges);
-		updateActiveEdges(scanline,activeEdges, allEdges);
+		updateActiveEdges(scanline, activeEdges, allEdges);
 		sortEdges(activeEdges);
 	}
 	allEdges.clear();
@@ -175,13 +175,13 @@ std::vector<Point<int>> toScreenCoordinatePoints(std::vector<std::vector<double>
 
 double getIntensity(Polygon<int> poly)
 {
-	Point<int> v = vec(minus(poly[2], poly[0]), minus(poly[1], poly[0]));
+	Point<int> v = vec(poly[2] - poly[0], poly[1] - poly[0]);
 	Point<double> n = normalise(v);
 	return dotProduct(n, light_dir);
 }
 void getColorTexture(Point<int> pixel, TGAImage &image, TGAImage &image2, Polygon<int> poly, Polygon<int> colors)
 {
-	
+
 	double aup = poly[0].x - pixel.x;
 	double bup = poly[1].x - pixel.x;
 	double cup = poly[2].x - pixel.x;
