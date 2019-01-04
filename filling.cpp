@@ -22,7 +22,7 @@ void drawSimpleLines(const std::vector<std::vector<int>> &edges, TGAImage &image
 	}
 }
 
-std::vector<std::vector<int>> fillPolyByListOfEdge(Polygon<int> poly)
+std::vector<std::vector<int>> createListOfEdgePoints(Polygon<int> poly)
 {
 	std::vector<std::vector<int>> edges;
 	edges.resize(height + 1);
@@ -227,7 +227,7 @@ void drawLinesTexturing(const std::vector<std::vector<int>> &edges, TGAImage &im
 
 void simpleFillByEdges(Polygon<int> poly, TGAImage &image, TGAColor color)
 {
-	std::vector<std::vector<int>> edges = fillPolyByListOfEdge(poly);
+	std::vector<std::vector<int>> edges = createListOfEdgePoints(poly);
 	drawSimpleLines(edges, image, color);
 }
 
@@ -237,7 +237,7 @@ void drawTriangleWithTexturing(Polygon<int> poly, TGAImage &image, TGAImage &ima
 
 	if (intensity > 0)
 	{
-		std::vector<std::vector<int>> edges = fillPolyByListOfEdge(poly);
+		std::vector<std::vector<int>> edges = createListOfEdgePoints(poly);
 		drawLinesTexturing(edges, image, image2, poly, colors);
 	}
 }

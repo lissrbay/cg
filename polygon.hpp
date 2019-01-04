@@ -20,10 +20,10 @@ class Line
     std::vector<Point<T>> p;
 
   public:
-    int minY;
-    int maxY;
-    int minX;
-    int maxX;
+    T minY;
+    T maxY;
+    T minX;
+    T maxX;
     double xVal;
     double slope;
     bool sw;
@@ -49,17 +49,11 @@ class Line
         this->minX = std::min(p1.x, p2.x);
         this->maxX = std::max(p1.x, p2.x);
 
-        if (std::min(p1.y, p2.y) == p1.y)
-        {
-            this->xVal = p1.x;
-        }
-        else
-        {
-            this->xVal = p2.x;
-        }
+        std::min(p1.y, p2.y) == p1.y ? this->xVal = p1.x : this->xVal = p2.x;
 
         this->slope =
             static_cast<double>(static_cast<double>(p1.y - p2.y)) / static_cast<double>((p1.x - p2.x));
+            
         p = {p1, p2};
     };
     Point<T> operator[](int i) { return p[i]; };

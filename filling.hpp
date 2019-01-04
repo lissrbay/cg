@@ -15,4 +15,3 @@ std::vector<Point<int>> toScreenCoordinatePoints(std::vector<std::vector<double>
 
 void drawTriangleWithTexturing(Polygon<int> poly, TGAImage &image, TGAImage &image2, Polygon<int> colors);
 
-std::vector<std::vector<int>> fillPolyByListOfEdge(Polygon<int> poly);
