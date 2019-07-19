@@ -5,6 +5,7 @@
 #include <string.h>
 
 using namespace std;
+
 int getColorCoordinateFromString(string s)
 {
     int p1 = s.find('/', 0);
@@ -12,6 +13,7 @@ int getColorCoordinateFromString(string s)
     int num = stoi(s.substr(p1 + 1, p2 - 1));
     return num;
 }
+
 Model::Model()
 {
     freopen("african_head.obj", "r", stdin);

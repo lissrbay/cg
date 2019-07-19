@@ -13,8 +13,8 @@ TGAColor getRandomColor()
 	srand(250);
 	unsigned char r = static_cast<unsigned char> (2 + rand() % 250);
 	unsigned char g = static_cast<unsigned char> (2 + rand() % 250);
-		unsigned char b = static_cast<unsigned char> (2 + rand() % 250);
-		return {r, g, b, 255};
+	unsigned char b = static_cast<unsigned char> (2 + rand() % 250);
+	return {r, g, b, 255};
 
 }
 

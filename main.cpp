@@ -9,6 +9,8 @@
 #include "polygon.hpp"
 #include "cutting.hpp"
 #include "transformation.hpp"
+#include "cutting_poly.hpp"
+
 using namespace std;
 TGAColor white = TGAColor(255, 255, 255, 255);
 TGAColor violet = TGAColor(255, 0, 255, 255);
@@ -174,61 +176,23 @@ void testTexturingModel()
     image.flip_vertically();
     image.write_tga_file("output7.tga");
 }
-/*
-void testCode()
+
+void testPolyClip()
 {
     TGAImage image(width, height, TGAImage::RGB);
+    vector<Point<int>> points = {Point<int>(45, 326), Point<int>(321, 220), Point<int>(0, 0)};
+    Polygon<int> main = Polygon<int>(points);
+    points = {Point<int>(100, 100), Point<int>(150, 520), Point<int>(500, 520), Point<int>(500, 100)};
+    Polygon<int> clip = Polygon<int>(points);
+    Polygon<int> ans = sutherlandHodgmanClip(clip, main);
 
-    Vertex main2[MAX] = {{45, 326}, {321, 220}, {0, 0}, {45, 326}}, 
-    clip2[MAX] = {{100, 100},{150, 520}, {500, 520}, {500, 100}, {100, 100}};
-    int main[8][2] = {{45, 326}, {321, 220}, {0, 0}, {45, 326}};
-    int clip[11][2] = {{100, 100},{150, 520}, {500, 520}, {500, 100}, {100, 100}};
-    int mainlen = 4, cliplen = 5;
-
-    for (int i = 0; i < mainlen - 1; i++)
-    {
-        drawLine(main[i][0], main[i][1], main[(i + 1)][0], main[(i + 1)][1], image, violet);
-    }
-    for (int i = 0; i < cliplen - 1; i++)
-    {
-        drawLine(clip[i][0], clip[i][1], clip[i + 1][0], clip[i + 1][1], image, white);
-    }
-    vector<vector<vector<int>>> ans2 = polygonClip(main2, mainlen, clip2, cliplen);
-    for (int i = 0; i < ans2.size(); i++)
-    {
-        vector<vector<int>> ans = ans2[i];
-        for (int j = 0; j < ans.size(); j++)
-            drawLine(ans[j][0], ans[j][1], ans[(j + 1) % ans.size()][0], ans[(j + 1) % ans.size()][1], image, red2);
-    }
-    image.flip_vertically();
-    image.write_tga_file("output6.tga");
-}
-void testCode2()
-{
-    TGAImage image(width, height, TGAImage::RGB);
-
-    int main2[8][2]  = {{45, 326}, {321, 220}, {0, 0}};
-    int clip2[11][2] = {{100, 100}, {150, 520}, {500, 520}, {500, 100}};
-    int main[8][2] = {{45, 326}, {321, 220}, {0, 0}, {45, 326}};
-    int clip[11][2] = {{100, 100}, {150, 520}, {500, 520}, {500, 100}, {100, 100}};
-    int mainlen = 3, cliplen = 4;
-
-    for (int i = 0; i < mainlen; i++)
-    {
-        drawLine(main[i][0], main[i][1], main[(i + 1)][0], main[(i + 1)][1], image, violet);
-    }
-    for (int i = 0; i < cliplen; i++)
-    {
-        drawLine(clip[i][0], clip[i][1], clip[i + 1][0], clip[i + 1][1], image, white);
-    }
-    vector<vector<int>> ans = suthHodgClip(main2, mainlen, clip2, cliplen);
-
-    for (int j = 0; j < ans.size(); j++)
-        drawLine(ans[j][0], ans[j][1], ans[(j + 1) % ans.size()][0], ans[(j + 1) % ans.size()][1], image, red2);
+    drawPolygon(main, image, violet);
+    drawPolygon(clip, image, white);
+    drawPolygon(ans, image, red);
 
     image.flip_vertically();
     image.write_tga_file("output7.tga");
-}*/
+}
 
 void testTransformPoly()
 {
@@ -263,13 +227,10 @@ int main(int argc, char **argv)
     //testLineSegment2();
     //testLineSegment3();
     //testLineSegment4();
-    //testCode();
-    //testCode2();
-
     //testTriangleFill();
-    //testTriangleFill3();
-    testTransformPoly();
-
+    //testTransformPoly();
     //testTexturingModel();
+    testPolyClip();
+
     return 0;
 }
