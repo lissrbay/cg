@@ -38,6 +38,10 @@ void CirclePixel(Point<int > center, Point<int> radiusP, TGAColor color, TGAImag
     image.set(center.x + radiusP.x, center.y - radiusP.y, color);
     image.set(center.x - radiusP.x, center.y + radiusP.y, color);
     image.set(center.x - radiusP.x, center.y - radiusP.y, color);
+    image.set(center.x + radiusP.y, center.y + radiusP.x, color);
+    image.set(center.x + radiusP.y, center.y - radiusP.x, color);
+    image.set(center.x - radiusP.y, center.y + radiusP.x, color);
+    image.set(center.x - radiusP.y, center.y - radiusP.x, color);
 }
 void drawCircle(Point<int> center, int r, TGAColor color, TGAImage &image)
 {

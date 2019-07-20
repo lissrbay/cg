@@ -96,6 +96,7 @@ public:
 	int get_bytespp();
 	unsigned char *buffer();
 	void clear();
+	void save(const char * path);
 };
 
 #endif //__IMAGE_H__

@@ -33,8 +33,7 @@ void testBrezenhem(Model *model)
         drawPolygon(drawingTriangle, image, violet);
     }
 
-    image.flip_vertically();
-    image.write_tga_file("output.tga");
+    image.save("out1.tga");
 }
 
 void testWu(Model *model)
@@ -54,8 +53,7 @@ void testWu(Model *model)
         drawPolygonWu(drawingTriangle, image, violet);
     }
 
-    image.flip_vertically();
-    image.write_tga_file("output1.tga");
+    image.save("out2.tga");
 }
 
 void testLineAndCircleBrezenhem()
@@ -63,8 +61,7 @@ void testLineAndCircleBrezenhem()
     TGAImage image(1000, 1000, TGAImage::RGB);
     drawLine(Line<int>(Point<int>(100, 100), Point<int>(230, 240)), image, white);
     drawCircle(Point<int>(250, 250), 80, white, image);
-    image.flip_vertically();
-    image.write_tga_file("output2.tga");
+    image.save("out3.tga");
 }
 
 void testCircleParametrised()
@@ -73,8 +70,7 @@ void testCircleParametrised()
     parametrisedCircle(Point<int>(250, 250), 80, white, image);
     parametrisedCircleByAngle(Point<int>(500, 500), 80, violet, image);
     DDAline(Line<int>(Point<int>(100, 140), Point<int>(180, 120)), white, image);
-    image.flip_vertically();
-    image.write_tga_file("output3.tga");
+    image.save("out4.tga");
 }
 
 void testTriangleFill()
@@ -84,8 +80,7 @@ void testTriangleFill()
     Point<int> v2 = Point<int>(500, 500);
     Point<int> v3 = Point<int>(1000, 600);
     fillPolygonByListOfActiveEdges(Triangle<int>(v1, v2, v3), image, getRandomColor());
-    image.flip_vertically();
-    image.write_tga_file("output1.tga");
+    image.save("out5.tga");
 }
 
 void testLineSegment()
@@ -99,8 +94,7 @@ void testLineSegment()
     cyrusBeck(line, rect, image, violet);
     drawPolygon(rect, image, white);
 
-    image.flip_vertically();
-    image.write_tga_file("output.tga");
+    image.save("out6.tga");
 }
 
 void testLineSegment2()
@@ -114,8 +108,7 @@ void testLineSegment2()
     cyrusBeck(line, rect, image, violet);
     drawPolygon(rect, image, white);
 
-    image.flip_vertically();
-    image.write_tga_file("output1.tga");
+    image.save("out7.tga");
 }
 
 void testLineSegment3()
@@ -129,8 +122,7 @@ void testLineSegment3()
     liangBarsky(line, rect, image, violet);
     drawPolygon(rect, image, white);
 
-    image.flip_vertically();
-    image.write_tga_file("output2.tga");
+    image.save("out8.tga");
 }
 void testLineSegment4()
 {
@@ -143,8 +135,7 @@ void testLineSegment4()
     cohenSutherland(line, rect, image, violet);
     drawPolygon(rect, image, white);
 
-    image.flip_vertically();
-    image.write_tga_file("output3.tga");
+    image.save("out9.tga");
 }
 
 void testTexturingModel()
@@ -173,8 +164,7 @@ void testTexturingModel()
         drawTriangleWithTexturing(coordinateTriangle, image, image2, colorsTriangle);
     }
 
-    image.flip_vertically();
-    image.write_tga_file("output7.tga");
+    image.save("out10.tga");
 }
 
 void testPolyClip()
@@ -190,8 +180,7 @@ void testPolyClip()
     drawPolygon(clip, image, white);
     drawPolygon(ans, image, red);
 
-    image.flip_vertically();
-    image.write_tga_file("output7.tga");
+    image.save("out11.tga");
 }
 
 void testTransformPoly()
@@ -212,25 +201,48 @@ void testTransformPoly()
         drawLine(Line<int>(rect[i], newRect[i]), image, red);
     }
 
-    image.flip_vertically();
-    image.write_tga_file("output1.tga");
+    image.save("out12.tga");
+}
+
+void testPolyClip2()
+{
+    TGAImage image(width, height, TGAImage::RGB);
+    vector<Point<int>> points = {Point<int>(45, 326), Point<int>(321, 220), Point<int>(0, 0), Point<int>(45, 326)};
+    Polygon<int> main2 = Polygon<int>(points);
+    points = {Point<int>(100, 100), Point<int>(150, 520), Point<int>(500, 520), Point<int>(500, 100), Point<int>(100, 100)};
+    Polygon<int> clip2 = Polygon<int>(points);
+    points = {Point<int>(45, 326), Point<int>(321, 220), Point<int>(0, 0), Point<int>(45, 326)};
+    Polygon<int> main = Polygon<int>(points);
+    points = {Point<int>(100, 100), Point<int>(150, 520), Point<int>(500, 520), Point<int>(500, 100), Point<int>(100, 100)};
+    Polygon<int> clip = Polygon<int>(points);
+    drawPolygon(main, image, violet);
+    drawPolygon(clip, image, white);
+
+    std::vector<Polygon<int>> ans2 = weilerAtherton(main2, clip2);
+    for (size_t i = 0; i < ans2.size(); i++)
+    {
+        Polygon<int> ans = ans2[i];
+        drawPolygon(ans, image, red);
+    }
+    image.save("out13.tga");
 }
 
 int main(int argc, char **argv)
 {
-    //Model *model = new Model();
-    //testBrezenhem(model); //голова
-    //testWu(model);        //тоже, но с Ву
-    //testLineAndCircleBrezenhem();
-    //testCircleParametrised();
-    //testLineSegment();
-    //testLineSegment2();
-    //testLineSegment3();
-    //testLineSegment4();
-    //testTriangleFill();
-    //testTransformPoly();
-    //testTexturingModel();
+    Model *model = new Model();
+    testBrezenhem(model); //голова
+    testWu(model);        //тоже, но с Ву
+    testLineAndCircleBrezenhem();
+    testCircleParametrised();
+    testLineSegment();
+    testLineSegment2();
+    testLineSegment3();
+    testLineSegment4();
+    testTriangleFill();
+    testTransformPoly();
+    testTexturingModel();
     testPolyClip();
+    testPolyClip2();
 
     return 0;
 }

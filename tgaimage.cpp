@@ -363,3 +363,8 @@ bool TGAImage::scale(int w, int h) {
 	return true;
 }
 
+void TGAImage::save(const char * path)
+{
+	flip_vertically();
+    write_tga_file(path);
+}
